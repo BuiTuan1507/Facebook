@@ -4,8 +4,11 @@ import 'package:uifacebook/SignUp/signupPass.dart';
 import 'signupPricacy.dart';
 
 class signUpDate extends StatefulWidget {
+  String phone;
   @override
   _signUpDateState createState() => _signUpDateState();
+  signUpDate({Key key, this.phone}) : super(key: key);
+
 }
 
 class _signUpDateState extends State<signUpDate> {
@@ -21,7 +24,7 @@ class _signUpDateState extends State<signUpDate> {
       body: SignUpDatePage(context),
     );
   }
-}
+
 Widget SignUpDatePage(context){
   print('11');
   return new  Column(
@@ -62,7 +65,7 @@ Widget _showButton(context){
       elevation: 7.0,
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpPass()));
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpPass(phone: widget.phone)));
 
         },
         child: Center(
@@ -105,4 +108,5 @@ Widget _showDateTime(context) {
         textAlign: TextAlign.center,
         style: TextStyle(color: Colors.blue,fontSize: 20),
       ));
+}
 }

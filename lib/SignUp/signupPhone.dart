@@ -6,9 +6,30 @@ import 'package:uifacebook/SignUp/signupName.dart';
 class signUpPhone extends StatefulWidget {
   @override
   _signUpPhoneState createState() => _signUpPhoneState();
+  String phone;
 }
 
 class _signUpPhoneState extends State<signUpPhone> {
+  final _formKey = new GlobalKey<FormState>();
+  TextEditingController phoneController = TextEditingController();
+  String phone;
+
+  bool validateAndSave() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  void validateAndSubmit() {
+    if (validateAndSave()) {
+      setState(() {
+        phone = phoneController.text;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,16 +38,18 @@ class _signUpPhoneState extends State<signUpPhone> {
         title: Text('So di dong',),
         centerTitle: true,
       ),
-      body: SignUpPhonePage(context),
+      body: SignUpPhonePage(context,phoneController,_formKey),
     );
   }
-}
-Widget SignUpPhonePage(context){
+
+Widget SignUpPhonePage(context, phoneController,_formKey){
   return new Column(
+    key:_formKey ,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
+
       _showText(),
-      _showPhoneField(),
+      _showPhoneField(phoneController),
       _showButton(context)
     ],
   );
@@ -45,10 +68,11 @@ Widget _showText(){
     ),
   );
 }
-Widget _showPhoneField(){
+Widget _showPhoneField(phoneController){
   return new Container(
     padding: EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
-    child: TextField(
+    child: TextFormField(
+      controller: phoneController,
         decoration: InputDecoration(
         labelText: 'Số di động',
         labelStyle: TextStyle(
@@ -57,6 +81,8 @@ Widget _showPhoneField(){
             color: Colors.grey),
             focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.green))),
+        validator: (value) => value.isEmpty ? 'Phone can\'t be empty' : null,
+        onSaved: (value) => phone = value.trim()
   ));
 }
 Widget _showButton(context){
@@ -70,7 +96,8 @@ Widget _showButton(context){
       elevation: 7.0,
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpSex()));
+         // validateAndSubmit();
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpSex(phone: phone,)));
 
         },
         child: Center(
@@ -87,4 +114,4 @@ Widget _showButton(context){
   );
 
 }
-
+}

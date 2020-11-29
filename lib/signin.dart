@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uifacebook/LoginFb.dart';
 import 'SignUp/signup.dart';
 class signIn extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class _signInState extends State<signIn> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Facebook',style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,color: Colors.blue),),
+        centerTitle: true,
       ),
       body: SignUpPage(context),
     );
@@ -25,7 +27,7 @@ Widget SignUpPage(context){
         _showImage(),
         _showEmailInput(),
         _showPasswordInput(),
-        _showLoginButton(),
+        _showLoginButton(context),
         _showForgetPassword(),
         _showSignIn(context)
       ],
@@ -46,9 +48,9 @@ Widget _showEmailInput(){
     padding: EdgeInsets.only(top: 10, left: 20, right: 10, bottom: 10),
     child:  TextFormField(
       decoration: InputDecoration(
-          labelText: 'Email hoặc số điện thoại',
+          labelText: 'Phone',
           labelStyle: TextStyle(
-            fontSize: 20,
+            fontSize: 17,
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.bold,
               color: Colors.grey),
@@ -68,7 +70,7 @@ Widget _showPasswordInput(){
           labelText: 'Mật khẩu',   //label cua truong nhap du lieu
           labelStyle: TextStyle(
             //style cua label
-            fontSize: 20,
+            fontSize: 17,
               fontFamily: 'Montserrat',  // kieu chu
               fontWeight: FontWeight.bold, // in dam
               color: Colors.grey),  // mau sac
@@ -79,7 +81,7 @@ Widget _showPasswordInput(){
   );
 
 }
-Widget _showLoginButton(){
+Widget _showLoginButton(context){
   return new Container(
       padding: EdgeInsets.only(left: 20,top: 10,bottom: 20,right: 20),
       height: 80.0,
@@ -90,6 +92,11 @@ Widget _showLoginButton(){
         elevation: 7.0,
         child: GestureDetector(
           onTap: () {
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>LoginFb()));
+
           },
           child: Center(
             child: Text(
