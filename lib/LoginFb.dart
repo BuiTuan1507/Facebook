@@ -4,6 +4,8 @@ import 'package:uifacebook/signin.dart';
 class LoginFb extends StatefulWidget {
   @override
   _LoginFbState createState() => _LoginFbState();
+  String token;
+  LoginFb({Key key,  this.token}) : super(key: key);
 }
 
 class _LoginFbState extends State<LoginFb> {

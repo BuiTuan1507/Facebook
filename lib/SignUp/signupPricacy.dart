@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:uifacebook/LoginFb.dart';
 import 'package:uifacebook/profile.dart';
 import "package:http/http.dart" as http;
 import 'dart:async';
@@ -8,60 +9,107 @@ import 'dart:convert';
 class signUpPrivacy extends StatefulWidget {
   String phone;
   String pass;
+  String firstName;
+  String lastName;
   @override
   _signUpPrivacyState createState() => _signUpPrivacyState();
-  signUpPrivacy({Key key, this.phone,this.pass}) : super(key: key);
+  signUpPrivacy({Key key, this.phone,this.pass,this.firstName, this.lastName}) : super(key: key);
 }
 
 class _signUpPrivacyState extends State<signUpPrivacy> {
-  String errorMessage;
-  bool showLogin = false;
 
+  String _errorMessage;
+  bool _isLoading;
+  bool _isLoginForm;
+  MessageLogin message;
+  //kiem tra xem form da valid hay chua
+
+
+  //submit
   void validateAndSubmit() async {
-    print (widget.phone);
-    print(widget.pass);
+
     setState(() {
-      errorMessage = "";
+      _errorMessage = "";
+      _isLoading = true;
     });
-    String userId = "";
+      try
       {
+        print(widget.firstName);
+
+        print(widget.lastName);
+        print(widget.phone);
+        print(widget.pass);
         final http.Response response = await http.post(
-          'http://639ab56aa53b.ngrok.io/api/signup',
+          'http://c0cf3e6d46ad.ngrok.io/api/signup',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, String>{
-            "phonenumber": "0932111223",
-            "password": "1234567",
-            "uuid": "123456"
+            "phonenumber": widget.phone,
+            "password": widget.pass,
+            "uuid": widget.firstName+ widget.lastName
+
           }),
         );
 
-        if (response.statusCode == 1000) {
-          print(response.statusCode);
-        } else {
-          throw Exception('Failed to create album.');
+
+        setState(() {
+          _isLoading = false;
+        });
+        message = MessageLogin.fromJson(json.decode(response.body));
+        if(message !=  null){
+          loginAfterSignUp();
         }
-        print('Signed up user: $userId');
+        print(message);
+      }catch(e){
+        print("Error : $e");
+        setState(() {
+          _isLoading = false;
+          _errorMessage = e.message;
+
+        });
       }
-
       showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Lỗi"),
-              content: Text("1"),
-              actions: [
-                FlatButton(
-                  child: Text("Ok"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Thong bao"),
+            content: Text("${message.code}  ${message.message}"),
+            actions: [
+              FlatButton(
+                child: Text("Ok"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
 
+  }
+  void loginAfterSignUp()async{
+    final http.Response response = await http.post(
+      'http://c0cf3e6d46ad.ngrok.io/api/login',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "phonenumber": widget.phone,
+        "password": widget.pass
+
+      }),
+    );
+  }
+  @override
+  void initState() {
+    _errorMessage = "";
+    _isLoading = false;
+    _isLoginForm = true;
+    super.initState();
+  }
+
+  void resetForm() {
+    _errorMessage = "";
   }
 
   @override
@@ -135,7 +183,7 @@ class _signUpPrivacyState extends State<signUpPrivacy> {
         child: GestureDetector(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
-                builder: (BuildContext context) => Profile()));
+                builder: (BuildContext context) => LoginFb()));
             validateAndSubmit();
           },
           child: Center(
@@ -168,17 +216,41 @@ class _signUpPrivacyState extends State<signUpPrivacy> {
       ),
     );
   }
+  Widget _showCircularProgress() {
+    if (_isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
+  }
+  Widget showErrorMessage() {
+    if (_errorMessage.length > 0 && _errorMessage != null) {
+      return new Text(
+        _errorMessage,
+        style: TextStyle(
+            fontSize: 13.0,
+            color: Colors.red,
+            height: 1.0,
+            fontWeight: FontWeight.w300),
+      );
+    } else {
+      return new Container(
+        height: 0.0,
+      );
+    }
+  }
 }
-class Album {
-  final int id;
-  final String title;
+class MessageLogin{
+  int code;
+  String message;
+  MessageLogin({this.code,this.message});
+  factory MessageLogin.fromJson(Map<String, dynamic> json) {
+    return MessageLogin(
+      code: json['code'],
+      message: json['message'].toString(),
 
-  Album({this.id, this.title});
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-  return Album(
-  id: json['id'],
-  title: json['title'],
-  );
+    );
   }
-  }
+}

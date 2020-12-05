@@ -5,16 +5,17 @@ import 'package:uifacebook/SignUp/signupPricacy.dart';
 class signUpPass extends StatefulWidget {
   String phone;
   String pass;
+  String firstName;
+  String lastName;
   @override
   _signUpPassState createState() => _signUpPassState();
-  signUpPass({Key key, this.phone}) : super(key: key);
+  signUpPass({Key key, this.phone,this.firstName, this.lastName}) : super(key: key);
 
 }
 
 class _signUpPassState extends State<signUpPass> {
   final _formKey = new GlobalKey<FormState>();
   TextEditingController passController = TextEditingController();
-
   String pass;
 
   bool validateAndSave() {
@@ -33,7 +34,6 @@ class _signUpPassState extends State<signUpPass> {
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,8 +110,12 @@ class _signUpPassState extends State<signUpPass> {
         elevation: 7.0,
         child: GestureDetector(
           onTap: () {
-           // validateAndSubmit();
-            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpPrivacy(phone: widget.phone,pass: pass,)));
+            validateAndSubmit();
+            if(pass != null)
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpPrivacy(phone: widget.phone,pass: pass,firstName:widget.firstName,lastName:widget.lastName)));
+
+              }
 
           },
           child: Center(

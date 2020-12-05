@@ -5,7 +5,10 @@ import 'package:uifacebook/SignUp/signupPhone.dart';
 
 class signUpSex extends StatefulWidget {
   String phone;
-  signUpSex({Key key, this.phone}) : super(key: key);
+  String firstName;
+  String lastName;
+
+  signUpSex({Key key, this.phone, this.firstName, this.lastName}) : super(key: key);
   @override
   _signUpSexState createState() => _signUpSexState();
 }
@@ -104,7 +107,7 @@ Widget _showButton(context){
       elevation: 7.0,
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpDate(phone: widget.phone)));
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpDate(phone: widget.phone,firstName:widget.firstName,lastName:widget.lastName)));
 
         },
         child: Center(

@@ -1,89 +1,233 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uifacebook/LoginFb.dart';
 import 'SignUp/signup.dart';
+
+import "package:http/http.dart" as http;
 class signIn extends StatefulWidget {
   @override
   _signInState createState() => _signInState();
 }
 
 class _signInState extends State<signIn> {
+  final _formKey = new GlobalKey<FormState>();
+  String _phoneNumber;
+  String _password;
+  String _errorMessage;
+  bool _isLoading;
+  bool _isLoginForm;
+  MessageLogin message;
+  //kiem tra xem form da valid hay chua
+
+  bool validateAndSave() {
+    final form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+   //submit
+  void validateAndSubmit() async {
+
+    setState(() {
+      _errorMessage = "";
+      _isLoading = true;
+    });
+    if(validateAndSave())
+    {
+        try
+        {
+          print(_phoneNumber);
+          print(_password);
+          final http.Response response = await http.post(
+            'http://c0cf3e6d46ad.ngrok.io/api/login',
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(<String, String>{
+              "phonenumber": _phoneNumber,
+              "password": _password,
+
+            }),
+          );
+
+
+          setState(() {
+            _isLoading = false;
+          });
+          message = MessageLogin.fromJson(json.decode(response.body));
+          print(message);
+        }catch(e){
+          print("Error : $e");
+          setState(() {
+            _isLoading = false;
+            _errorMessage = e.message;
+            _formKey.currentState.reset();
+          });
+        }
+
+
+      }
+       showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Thong bao"),
+              content: Text("${message.code}  ${message.data.token}"),
+              actions: [
+                FlatButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+
+    }
+  @override
+  void initState() {
+    _errorMessage = "";
+    _isLoading = false;
+    _isLoginForm = true;
+    super.initState();
+  }
+
+  void resetForm() {
+    _formKey.currentState.reset();
+    _errorMessage = "";
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-        title: Text('Facebook',style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,color: Colors.blue),),
+    Size size = MediaQuery
+        .of(context)
+        .size;
+
+    return new Scaffold(
+      appBar:AppBar(
         centerTitle: true,
+        backgroundColor: Colors.blue,
+        title: Text("Facebook",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),),
       ),
-      body: SignUpPage(context),
+      body: Stack(
+        children: <Widget>[
+          SignUpPage(context,size),
+          _showCircularProgress(),
+        ],
+      )
+
     );
   }
-}
-Widget SignUpPage(context){
-  return new SingleChildScrollView(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        _showImage(),
-        _showEmailInput(),
-        _showPasswordInput(),
-        _showLoginButton(context),
-        _showForgetPassword(),
-        _showSignIn(context)
-      ],
 
-    ),
-  );
-}
-Widget _showImage(){
-  return new Container (
-    child: Image.asset("assets/123.PNG" ,
-      width: 410,
-      height: 220,
-      fit:BoxFit.fill,
-  ));
-}
-Widget _showEmailInput(){
-  return new Container(
-    padding: EdgeInsets.only(top: 10, left: 20, right: 10, bottom: 10),
-    child:  TextFormField(
-      decoration: InputDecoration(
-          labelText: 'Phone',
-          labelStyle: TextStyle(
-            fontSize: 17,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.bold,
-              color: Colors.grey),
-          focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.blue))),
-    )
-  );
+  Widget SignUpPage(context,size) {
+    return new SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _showImage(size),
+          Container(
+            padding: EdgeInsets.all(4),
+            child: new Form(
+              key: _formKey,
+              child: new ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  _showEmailInput(),
+                  _showPasswordInput(),
+                  _showLoginButton(context),
+                  _showForgetPassword(),
+                  _showSignIn(context),
+                  showErrorMessage(),
+                ],
+              ),
 
+            ),
+          )
 
-}
-Widget _showPasswordInput(){
-  return new Container(
-    padding: EdgeInsets.only(left: 20,right: 20, bottom: 20),
-    child:  TextFormField(     // field nhap mat khau
-      decoration: InputDecoration(
+        ],
 
-          labelText: 'Mật khẩu',   //label cua truong nhap du lieu
-          labelStyle: TextStyle(
-            //style cua label
-            fontSize: 17,
-              fontFamily: 'Montserrat',  // kieu chu
-              fontWeight: FontWeight.bold, // in dam
-              color: Colors.grey),  // mau sac
-          focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.blue))),
-      obscureText: true,// nhap mat khau sau 1 khoang thoi gian thi no se che di
-    ),
-  );
+      ),
+    );
+  }
 
-}
-Widget _showLoginButton(context){
-  return new Container(
-      padding: EdgeInsets.only(left: 20,top: 10,bottom: 20,right: 20),
+  Widget _showImage(Size size) {
+    return new Container (
+        child: Image.asset("assets/123.PNG",
+          width: size.width,
+          height: 220,
+          fit: BoxFit.fill,
+        ));
+  }
+  Widget showErrorMessage() {
+    if (_errorMessage.length > 0 && _errorMessage != null) {
+      return new Text(
+        _errorMessage,
+        style: TextStyle(
+            fontSize: 13.0,
+            color: Colors.red,
+            height: 1.0,
+            fontWeight: FontWeight.w300),
+      );
+    } else {
+      return new Container(
+        height: 0.0,
+      );
+    }
+  }
+  Widget _showEmailInput() {
+    return new Container(
+        padding: EdgeInsets.only(top: 10, left: 20, right: 10, bottom: 10),
+        child: TextFormField(
+          maxLines: 1,
+          autofocus: false,
+          decoration: InputDecoration(
+              labelText: 'Điện thoại',
+              labelStyle: TextStyle(
+                  fontSize: 17,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey),
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue))),
+          validator: (value) => value.isEmpty ? 'Phone không thể trống' : null,
+          onSaved: (value) => _phoneNumber = value.trim(),
+        )
+    );
+  }
+
+  Widget _showPasswordInput() {
+    return new Container(
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      child: TextFormField(
+        maxLines: 1,
+        obscureText: true,
+        autofocus: false,
+        decoration: InputDecoration(
+
+            labelText: 'Mật khẩu', //label cua truong nhap du lieu
+            labelStyle: TextStyle(
+              //style cua label
+                fontSize: 17,
+                fontFamily: 'Montserrat', // kieu chu
+                fontWeight: FontWeight.bold, // in dam
+                color: Colors.grey), // mau sac
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue))),
+        validator: (value) => value.isEmpty ? 'Mật khẩu không thể trống' : null,
+        onSaved: (value) => _password = value.trim(), // nhap mat khau sau 1 khoang thoi gian thi no se che di
+      ),
+    );
+  }
+
+  Widget _showLoginButton(context) {
+    return new Container(
+      padding: EdgeInsets.only(left: 20, top: 10, bottom: 20, right: 20),
       height: 80.0,
       child: Material(
         borderRadius: BorderRadius.circular(20.0),
@@ -92,17 +236,20 @@ Widget _showLoginButton(context){
         elevation: 7.0,
         child: GestureDetector(
           onTap: () {
-
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>LoginFb()));
+            validateAndSubmit();
+            if(message.data.token != null)
+              {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginFb(token:message.data.token)));
+              }
 
           },
           child: Center(
             child: Text(
               'Đăng nhập',
               style: TextStyle(
-                fontSize: 18,
+                  fontSize: 18,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Montserrat'),
@@ -111,57 +258,99 @@ Widget _showLoginButton(context){
         ),
       ),
 
-  );
-}
-Widget _showForgetPassword(){
-  return new Container(
-    padding: EdgeInsets.only(top: 7, bottom: 7),
-    child: Center(
+    );
+  }
 
-      child: InkWell(
-        child: Text(
-          'Quên mật khẩu',
-          style: TextStyle(
-              fontSize: 18,
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Montserrat',
-              decoration: TextDecoration.underline),
+  Widget _showForgetPassword() {
+    return new Container(
+      padding: EdgeInsets.only(top: 7, bottom: 7),
+      child: Center(
+
+        child: InkWell(
+          child: Text(
+            'Quên mật khẩu',
+            style: TextStyle(
+                fontSize: 18,
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Montserrat',
+                decoration: TextDecoration.underline),
+          ),
         ),
+
       ),
+    );
+  }
 
-    ),
-  );
+  Widget _showSignIn(context) {
+    return new Container(
+      child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Chưa có tài khoản ?',
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 18),
+              ),
+              SizedBox(width: 10.0),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (BuildContext context) => signUp()));
+                },
+                child: Text(
+                  'Đăng ký',
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 20,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline),
+                ),
+              )
+            ],
+          )
+      ),
+    );
+  }
+  Widget _showCircularProgress() {
+    if (_isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
+  }
 }
-Widget _showSignIn(context){
- return new Container(
-   child:  Center(
-     child:   Row(
-       mainAxisAlignment: MainAxisAlignment.center,
-       children: <Widget>[
-         Text(
-           'Chưa có tài khoản ?',
-           style: TextStyle(fontFamily: 'Montserrat',fontSize: 18),
-         ),
-         SizedBox(width: 10.0),
-         InkWell(
-           onTap: () {
-             Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUp()));
-           },
-           child: Text(
-             'Đăng ký',
-             style: TextStyle(
-                 color: Colors.blue,
-                 fontSize: 20,
-                 fontFamily: 'Montserrat',
-                 fontWeight: FontWeight.bold,
-                 decoration: TextDecoration.underline),
-           ),
-         )
-       ],
-     )
-   ),
- );
+class MessageLogin{
+  int code;
+  String message;
+  DataReturn data;
+  MessageLogin({this.code,this.message, this.data});
+  factory MessageLogin.fromJson(Map<String, dynamic> json) {
+    return MessageLogin(
+        code: json['code'],
+        message: json['message'].toString(),
+      data: DataReturn.fromJson(json['data'])
 
-
+    );
+  }
 }
+class DataReturn{
+  int id;
+  String token;
+  String avatar;
+  String active;
+  DataReturn({this.id,this.token, this.active, this.avatar});
+  factory DataReturn.fromJson(Map<String, dynamic> json) {
+    return DataReturn(
+      id: json['id'],
+      token: json['token'].toString(),
+      avatar: json['avatar'].toString(),
+      active: json['active'].toString()
+
+    );
+  }
+}
+

@@ -5,9 +5,11 @@ import 'signupPricacy.dart';
 
 class signUpDate extends StatefulWidget {
   String phone;
+  String firstName;
+  String lastName;
   @override
   _signUpDateState createState() => _signUpDateState();
-  signUpDate({Key key, this.phone}) : super(key: key);
+  signUpDate({Key key, this.phone, this.firstName, this.lastName}) : super(key: key);
 
 }
 
@@ -65,7 +67,7 @@ Widget _showButton(context){
       elevation: 7.0,
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpPass(phone: widget.phone)));
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpPass(phone: widget.phone,firstName:widget.firstName,lastName:widget.lastName)));
 
         },
         child: Center(

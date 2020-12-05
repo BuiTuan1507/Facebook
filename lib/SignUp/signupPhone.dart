@@ -6,7 +6,10 @@ import 'package:uifacebook/SignUp/signupName.dart';
 class signUpPhone extends StatefulWidget {
   @override
   _signUpPhoneState createState() => _signUpPhoneState();
+  signUpPhone({Key key, this.firstName, this.lastName}) : super(key: key);
   String phone;
+  String firstName;
+  String lastName;
 }
 
 class _signUpPhoneState extends State<signUpPhone> {
@@ -44,13 +47,20 @@ class _signUpPhoneState extends State<signUpPhone> {
 
 Widget SignUpPhonePage(context, phoneController,_formKey){
   return new Column(
-    key:_formKey ,
+
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
+        Form(
+          key:_formKey,
+          child: Column(
+            children: <Widget>[
+              _showText(),
+              _showPhoneField(phoneController),
+              _showButton(context)
+            ],
+          ),
+        )
 
-      _showText(),
-      _showPhoneField(phoneController),
-      _showButton(context)
     ],
   );
 }
@@ -96,8 +106,13 @@ Widget _showButton(context){
       elevation: 7.0,
       child: GestureDetector(
         onTap: () {
-         // validateAndSubmit();
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpSex(phone: phone,)));
+
+         validateAndSubmit();
+         if(phone != null)
+           {
+             Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpSex(phone: phone,firstName:widget.firstName,lastName: widget.lastName)));
+           }
+
 
         },
         child: Center(
