@@ -40,7 +40,7 @@ class _signUpPrivacyState extends State<signUpPrivacy> {
         print(widget.phone);
         print(widget.pass);
         final http.Response response = await http.post(
-          'http://c0cf3e6d46ad.ngrok.io/api/signup',
+          'http://7bc8a6686fac.ngrok.io/api/signup',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -69,12 +69,12 @@ class _signUpPrivacyState extends State<signUpPrivacy> {
 
         });
       }
-      showDialog(
+    (_errorMessage != null ) ? showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Thong bao"),
-            content: Text("${message.code}  ${message.message}"),
+            title: Text("Thông báo"),
+            content: Text("Số điện thoại bạn nhập không đúng"),
             actions: [
               FlatButton(
                 child: Text("Ok"),
@@ -84,12 +84,12 @@ class _signUpPrivacyState extends State<signUpPrivacy> {
               )
             ],
           );
-        });
+        }): Container(height: 0,);
 
   }
   void loginAfterSignUp()async{
     final http.Response response = await http.post(
-      'http://c0cf3e6d46ad.ngrok.io/api/login',
+      ' http://7bc8a6686fac.ngrok.io/api/login',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

@@ -91,8 +91,8 @@ Widget _showDateTime(context) {
       onPressed: () {
         DatePicker.showDatePicker(context,
             showTitleActions: true,
-            minTime: DateTime(2018, 3, 5),
-            maxTime: DateTime(2019, 6, 7),
+            minTime: DateTime(1930, 1, 1),
+            maxTime: DateTime(2014, 1, 1),
             theme: DatePickerTheme(
                 headerColor: Colors.blue,
                 backgroundColor: Colors.white,

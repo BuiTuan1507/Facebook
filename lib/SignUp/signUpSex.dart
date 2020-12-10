@@ -7,6 +7,7 @@ class signUpSex extends StatefulWidget {
   String phone;
   String firstName;
   String lastName;
+  String sexUser;
 
   signUpSex({Key key, this.phone, this.firstName, this.lastName}) : super(key: key);
   @override
@@ -107,6 +108,7 @@ Widget _showButton(context){
       elevation: 7.0,
       child: GestureDetector(
         onTap: () {
+          widget.sexUser = selectedSex.name;
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpDate(phone: widget.phone,firstName:widget.firstName,lastName:widget.lastName)));
 
         },
