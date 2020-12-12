@@ -108,8 +108,17 @@ Widget _showButton(context){
       elevation: 7.0,
       child: GestureDetector(
         onTap: () {
-          widget.sexUser = selectedSex.name;
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpDate(phone: widget.phone,firstName:widget.firstName,lastName:widget.lastName)));
+          if(selectedSex.sexId == 3)
+            {
+              widget.sexUser = null;
+            }
+          else
+            {
+              widget.sexUser = selectedSex.name;
+            }
+
+
+          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpDate(phone: widget.phone,firstName:widget.firstName,lastName:widget.lastName,male:widget.sexUser)));
 
         },
         child: Center(

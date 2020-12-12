@@ -7,9 +7,11 @@ class signUpDate extends StatefulWidget {
   String phone;
   String firstName;
   String lastName;
+  String date;
+  String male;
   @override
   _signUpDateState createState() => _signUpDateState();
-  signUpDate({Key key, this.phone, this.firstName, this.lastName}) : super(key: key);
+  signUpDate({Key key, this.phone, this.firstName, this.lastName, this.male}) : super(key: key);
 
 }
 
@@ -66,8 +68,13 @@ Widget _showButton(context){
       color: Colors.blue,
       elevation: 7.0,
       child: GestureDetector(
+
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpPass(phone: widget.phone,firstName:widget.firstName,lastName:widget.lastName)));
+          if(widget.date!= null)
+          {
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpPass(phone: widget.phone,firstName:widget.firstName,lastName:widget.lastName,date:widget.date, male:widget.male)));
+          }
+
 
         },
         child: Center(
@@ -102,6 +109,7 @@ Widget _showDateTime(context) {
             onChanged: (date) {
               print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
             }, onConfirm: (date) {
+          widget.date = date.timeZoneOffset.inHours.toString();
               print('confirm $date');
             }, currentTime: DateTime.now(), locale: LocaleType.en);
       },

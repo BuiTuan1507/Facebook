@@ -7,9 +7,11 @@ class signUpPass extends StatefulWidget {
   String pass;
   String firstName;
   String lastName;
+  String date;
+  String male;
   @override
   _signUpPassState createState() => _signUpPassState();
-  signUpPass({Key key, this.phone,this.firstName, this.lastName}) : super(key: key);
+  signUpPass({Key key, this.phone,this.firstName, this.lastName, this.date, this.male}) : super(key: key);
 
 }
 
@@ -113,7 +115,7 @@ class _signUpPassState extends State<signUpPass> {
             validateAndSubmit();
             if(pass != null)
               {
-                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpPrivacy(phone: widget.phone,pass: pass,firstName:widget.firstName,lastName:widget.lastName)));
+                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpPrivacy(phone: widget.phone,pass: pass,firstName:widget.firstName,lastName:widget.lastName,date:widget.date, male:widget.male)));
 
               }
 

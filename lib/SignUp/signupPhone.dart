@@ -10,6 +10,7 @@ class signUpPhone extends StatefulWidget {
   String phone;
   String firstName;
   String lastName;
+
 }
 
 class _signUpPhoneState extends State<signUpPhone> {

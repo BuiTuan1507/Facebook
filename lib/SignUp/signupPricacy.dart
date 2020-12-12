@@ -11,9 +11,11 @@ class signUpPrivacy extends StatefulWidget {
   String pass;
   String firstName;
   String lastName;
+  String date;
+  String male;
   @override
   _signUpPrivacyState createState() => _signUpPrivacyState();
-  signUpPrivacy({Key key, this.phone,this.pass,this.firstName, this.lastName}) : super(key: key);
+  signUpPrivacy({Key key, this.phone,this.pass,this.firstName, this.lastName, this.date, this.male}) : super(key: key);
 }
 
 class _signUpPrivacyState extends State<signUpPrivacy> {

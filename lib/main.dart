@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uifacebook/AnotherProfile.dart';
 import 'package:uifacebook/SignUp/signupDate.dart';
+import 'package:uifacebook/VertifileCode.dart';
 import 'package:uifacebook/signin.dart';
 
 import 'LoginFb.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home:signIn(),
+      home:VertifileCode(),
     );
   }
 }
