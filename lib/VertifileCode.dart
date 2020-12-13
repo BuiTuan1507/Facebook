@@ -27,28 +27,28 @@ class _VertifileCodeState extends State<VertifileCode> {
       body: Stack(
         children: <Widget>[
           Positioned(
-            top: size.height*0.1,
-                left: size.height*0.1,
-                child: Text("Chúng tôi đã gửi SMS kèm mã tới"),
+            top: size.height*0.04,
+                left: size.height*0.015,
+                child: Text("Chúng tôi đã gửi SMS kèm mã tới",style: TextStyle(fontSize: 18,color: Colors.black),),
               ),
           Positioned(
-            top: 20,
-                left: size.width*0.6,
-                child: Text('.${widget.phone}'),
+            top: size.height*0.04,
+                left: size.width*0.7,
+                child: Text('0923234331',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.black),),
               ),
 
 
           Positioned(
-              top: 50,
-            left: 40,
+              top: size.height*0.085,
+            left: size.width*0.1,
             child: Container(
-                child: Text("Nhập mã gồm 5 chữ số từ SMS của bạn"),
+                child: Text("Nhập mã gồm 5 chữ số từ SMS của bạn",style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold,color: Colors.black),),
               )
 
           ),
           Positioned(
-            top:80,
-            left: size.width*0.4,
+            top:size.height*0.13,
+            left: size.width*0.30,
             child: Row(
               children: <Widget>[
                 Container(
@@ -62,15 +62,15 @@ class _VertifileCodeState extends State<VertifileCode> {
                 ),
                 Container(
                   height: 40,
-                  width: 100,
+                  width: 130,
                   child: TextField(
 
                       decoration: new InputDecoration(
-                        labelText: "Code",
+
                         fillColor: Colors.white,
 
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
+                          borderRadius: BorderRadius.circular(4.0),
                           borderSide: BorderSide(
                             color: Colors.grey,
                             width: 2.0,
@@ -84,13 +84,13 @@ class _VertifileCodeState extends State<VertifileCode> {
             ),
           ),
           Positioned(
-            top: size.height*0.4,
-            left: size.width*0.1,
+            top: size.height*0.225,
+            left: size.width*0.05,
 
               child: Container(
                 padding: EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 10),
                 height: 60,
-                width: size.width * 0.6,
+                width: size.width * 0.9,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6.0),
@@ -98,7 +98,7 @@ class _VertifileCodeState extends State<VertifileCode> {
                   color: Color.fromRGBO(23, 119, 242, 1),
                   onPressed: () {},
                   child: Container(
-                    padding: EdgeInsets.only(left: 30),
+                    padding: EdgeInsets.only(left: 90),
                     child: Row(
                       children: <Widget>[
 
@@ -106,7 +106,7 @@ class _VertifileCodeState extends State<VertifileCode> {
                           padding: EdgeInsets.only(left: 5),
                           child: Text(
                             "Xác nhận",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
+                            style: TextStyle(fontSize: 18, color: Colors.white,fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -115,6 +115,57 @@ class _VertifileCodeState extends State<VertifileCode> {
                 ),
               ),
             ),
+          Positioned(
+            top: size.height*0.31,
+            left: size.width*0.08,
+            child: Container(
+              width: size.width*0.8,
+              child: Divider(color: Colors.grey,),
+            ),
+          ),
+          Positioned(
+            top: size.height*0.345,
+            left: size.width*0.05,
+
+            child: Container(
+              padding: EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 10),
+              height: 60,
+              width: size.width * 0.9,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6.0),
+                    side: BorderSide(color: Color.fromRGBO(229, 230, 235, 1))),
+                color: Color.fromRGBO(229, 230, 235, 1),
+                onPressed: () {},
+                child: Container(
+                  padding: EdgeInsets.only(left: 40),
+                  child: Row(
+                    children: <Widget>[
+
+                      Container(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Text(
+                          "Tôi không nhận được mã",
+                          style: TextStyle(fontSize: 18, color: Colors.black,fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: size.height*0.44,
+            left: size.width*0.4,
+            child:InkWell(
+              onTap: (){
+
+              },
+              child: Text("Đăng xuất",style: TextStyle(fontSize: 20),),
+            )
+          )
+
 
 
         ],
