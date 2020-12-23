@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 class SaveUser extends StatefulWidget {
@@ -8,6 +9,7 @@ class SaveUser extends StatefulWidget {
 class _SaveUserState extends State<SaveUser> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text("Đang đăng nhập"),
@@ -17,54 +19,47 @@ class _SaveUserState extends State<SaveUser> {
       ),
       body: AlertDialog(
         title: Text("Nhớ số điện thoại và mật khẩu của bạn"),
-        content: Column(
-          children: <Widget>[
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      child: Text("Bạn cần nhập thông tin này vào lần đăng nhập sau",style: TextStyle(fontSize: 18),),
+        content: Container(
+          padding: EdgeInsets.all(5),
+          height: size.height*0.4,
+          child:   Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Container(
+                    height: 60,
+                    width: size.width*0.6,
+                    child:Flexible(
+                      child:Text("Bạn cần nhập thông tin này mỗi khi đăng nhập trên một thiết bị mới",overflow: TextOverflow.fade, style: TextStyle(fontSize: 17,),),
                     ),
-                    Container(
-                      child: Text("Số điện thoại"),
-                    )
 
-                  ],
+                  )
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    child: Text("Email"),
+                  )
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                Container(
+                  width: size.width*0.6,
+                  decoration: BoxDecoration(
+                    color: Colors.grey
+                  ),
+                  child: Text("0932221212",style: TextStyle(fontSize: 18),),
                 )
-
+                ],
               ),
 
-          ],
-        ),
-        actions: [
-          Container(
-            padding: EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 10),
-            height: 60,
-            width: 200,
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6.0),
-                  side: BorderSide(color: Color.fromRGBO(23, 119, 242, 1))),
-              color: Color.fromRGBO(23, 119, 242, 1),
-              onPressed: () {},
-              child: Container(
-                padding: EdgeInsets.only(left: 90),
-                child: Row(
-                  children: <Widget>[
-
-                    Container(
-                      padding: EdgeInsets.only(left: 5),
-                      child: Text(
-                        "Xác nhận",
-                        style: TextStyle(fontSize: 18, color: Colors.white,fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            ],
           ),
-        ],
+        )
+
+
       ),
     );
   }

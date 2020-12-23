@@ -36,11 +36,8 @@ class _signUpPrivacyState extends State<signUpPrivacy> {
     });
       try
       {
-        print(widget.firstName);
+        print(widget.date);
 
-        print(widget.lastName);
-        print(widget.phone);
-        print(widget.pass);
         final http.Response response = await http.post(
           'http://7bc8a6686fac.ngrok.io/api/signup',
           headers: <String, String>{
@@ -49,6 +46,10 @@ class _signUpPrivacyState extends State<signUpPrivacy> {
           body: jsonEncode(<String, String>{
             "phonenumber": widget.phone,
             "password": widget.pass,
+            "first_name":widget.firstName,
+            "last_name":widget.lastName,
+            "birth_day":widget.date,
+            "male":widget.male,
             "uuid": widget.firstName+ widget.lastName
 
           }),
@@ -184,9 +185,16 @@ class _signUpPrivacyState extends State<signUpPrivacy> {
         elevation: 7.0,
         child: GestureDetector(
           onTap: () {
+            validateAndSubmit();
+            if(message.code == 200){
+
+            }
+            if(message.code == 204){
+
+            }
             Navigator.push(context, MaterialPageRoute(
                 builder: (BuildContext context) => LoginFb()));
-            validateAndSubmit();
+
           },
           child: Center(
             child: Text(

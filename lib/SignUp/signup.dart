@@ -63,12 +63,12 @@ class _signUpState extends State<signUp> {
 
   Widget _showText2() {
     return new Container(
-      padding: EdgeInsets.only(left: 20, top: 10, right: 10, bottom: 15),
+      padding: EdgeInsets.only(left: 25, top: 10, right: 25, bottom: 15),
       child: Text(
         'Chúng tôi sẽ giúp bạn tạo tài  khoản sau vài bước thực hiện dễ dàng',
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: 16
+            fontSize: 16,color: Colors.black87
         ),
       ),
     );
@@ -79,8 +79,8 @@ class _signUpState extends State<signUp> {
       padding: EdgeInsets.only(left: 20, top: 10, bottom: 20, right: 20),
       height: 80.0,
       child: Material(
-        borderRadius: BorderRadius.circular(20.0),
-        shadowColor: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(8.0),
+
         color: Colors.blue,
         elevation: 7.0,
         child: GestureDetector(

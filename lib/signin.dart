@@ -109,12 +109,7 @@ class _signInState extends State<signIn> {
         .size;
 
     return new Scaffold(
-      appBar:AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-        title: Text("Facebook",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),),
-      ),
+
       body: Stack(
         children: <Widget>[
           SignUpPage(context,size),
@@ -142,6 +137,13 @@ class _signInState extends State<signIn> {
                   _showPasswordInput(),
                   _showLoginButton(context),
                   _showForgetPassword(),
+                Divider(
+                  height: 50,
+                  indent: 30,
+                  endIndent: 30,
+                  thickness: 1,
+                  color: Colors.grey,
+                ),
                   _showSignIn(context),
                   showErrorMessage(),
                 ],
@@ -160,7 +162,7 @@ class _signInState extends State<signIn> {
     return new Container (
         child: Image.asset("assets/123.PNG",
           width: size.width,
-          height: 220,
+          height: 250,
           fit: BoxFit.fill,
         ));
   }
@@ -182,14 +184,14 @@ class _signInState extends State<signIn> {
   }
   Widget _showEmailInput() {
     return new Container(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 10, bottom: 10),
+        padding: EdgeInsets.only(top: 6, left: 30, right: 30, bottom: 6),
         child: TextFormField(
           maxLines: 1,
           autofocus: false,
           decoration: InputDecoration(
-              labelText: 'Điện thoại',
+              labelText: 'Số điện thoại hoặc email',
               labelStyle: TextStyle(
-                  fontSize: 17,
+                  fontSize: 20,
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
                   color: Colors.grey),
@@ -203,7 +205,7 @@ class _signInState extends State<signIn> {
 
   Widget _showPasswordInput() {
     return new Container(
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      padding: EdgeInsets.only(left: 30, right: 30, bottom: 12),
       child: TextFormField(
         maxLines: 1,
         obscureText: true,
@@ -213,7 +215,7 @@ class _signInState extends State<signIn> {
             labelText: 'Mật khẩu', //label cua truong nhap du lieu
             labelStyle: TextStyle(
               //style cua label
-                fontSize: 17,
+                fontSize: 20,
                 fontFamily: 'Montserrat', // kieu chu
                 fontWeight: FontWeight.bold, // in dam
                 color: Colors.grey), // mau sac
@@ -227,11 +229,11 @@ class _signInState extends State<signIn> {
 
   Widget _showLoginButton(context) {
     return new Container(
-      padding: EdgeInsets.only(left: 20, top: 10, bottom: 20, right: 20),
-      height: 80.0,
+      padding: EdgeInsets.only(left: 30, top: 4, bottom: 10, right: 30),
+      height: 55.0,
       child: Material(
-        borderRadius: BorderRadius.circular(20.0),
-        shadowColor: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(8.0),
+
         color: Colors.blue,
         elevation: 7.0,
         child: GestureDetector(
@@ -284,32 +286,33 @@ class _signInState extends State<signIn> {
 
   Widget _showSignIn(context) {
     return new Container(
-      child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Chưa có tài khoản ?',
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 18),
-              ),
-              SizedBox(width: 10.0),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (BuildContext context) => signUp()));
-                },
-                child: Text(
-                  'Đăng ký',
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 20,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline),
-                ),
-              )
-            ],
-          )
+      padding: EdgeInsets.only(left: 60, top: 4, bottom: 10, right: 60),
+      height: 55.0,
+      child: Material(
+        borderRadius: BorderRadius.circular(8.0),
+
+        color: Colors.green,
+        elevation: 7.0,
+        child: GestureDetector(
+          onTap: () {
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => signUp()));
+
+
+          },
+          child: Center(
+            child: Text(
+              'Tao tai khoan facebook moi',
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat'),
+            ),
+          ),
+        ),
       ),
     );
   }

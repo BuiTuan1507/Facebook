@@ -109,7 +109,7 @@ Widget _showDateTime(context) {
             onChanged: (date) {
               print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
             }, onConfirm: (date) {
-          widget.date = date.timeZoneOffset.inHours.toString();
+          widget.date = date.toString();
               print('confirm $date');
             }, currentTime: DateTime.now(), locale: LocaleType.en);
       },
