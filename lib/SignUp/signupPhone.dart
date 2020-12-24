@@ -39,8 +39,12 @@ class _signUpPhoneState extends State<signUpPhone> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('So di dong',),
-        centerTitle: true,
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        title: Text('Số di động', style: TextStyle(fontSize: 22,fontWeight:FontWeight.w600, color: Colors.black),),
+        backgroundColor: Colors.white,
       ),
       body: SignUpPhonePage(context,phoneController,_formKey),
     );
@@ -73,7 +77,7 @@ Widget _showText(){
         'Nhập số di động của bạn',
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: 24, fontWeight: FontWeight.bold
+            fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black
         ),
       ),
     ),
@@ -87,23 +91,24 @@ Widget _showPhoneField(phoneController){
         decoration: InputDecoration(
         labelText: 'Số di động',
         labelStyle: TextStyle(
+          fontSize: 20,
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
-            color: Colors.grey),
+            color: Color.fromRGBO(153, 156, 160, 1)),
             focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.green))),
-        validator: (value) => value.isEmpty ? 'Phone can\'t be empty' : null,
+            borderSide: BorderSide(color: Color.fromRGBO(24, 119, 242, 1)))),
+        validator: (value) => value.isEmpty ? 'Vui lòng nhập vào một số điện thoại hợp lệ' : null,
         onSaved: (value) => phone = value.trim()
   ));
 }
 Widget _showButton(context){
   return new Container(
     padding: EdgeInsets.only(right: 20, left: 20, top: 120, bottom: 0),
-    height: 160.0,
+    height: 170.0,
     child: Material(
-      borderRadius: BorderRadius.circular(20.0),
-      shadowColor: Colors.blueAccent,
-      color: Colors.blue,
+      borderRadius: BorderRadius.circular(8.0),
+
+      color: Color.fromRGBO(24, 119, 242, 1),
       elevation: 7.0,
       child: GestureDetector(
         onTap: () {

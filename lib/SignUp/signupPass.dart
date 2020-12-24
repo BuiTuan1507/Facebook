@@ -41,9 +41,12 @@ class _signUpPassState extends State<signUpPass> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Mật khẩu'),
-
-        centerTitle: true,
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        title: Text('Mật khẩu', style: TextStyle(fontSize: 22,fontWeight:FontWeight.w600, color: Colors.black),),
+        backgroundColor: Colors.white,
       ),
       body: SignUpPassPage(context),
     );
@@ -90,11 +93,12 @@ class _signUpPassState extends State<signUpPass> {
           decoration: InputDecoration(
               labelText: 'Mật Khẩu',
               labelStyle: TextStyle(
+                fontSize: 20,
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
                   color: Colors.grey),
               focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.green))),
+                  borderSide: BorderSide(color: Color.fromRGBO(24, 119, 242, 1)))),
           validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
           onSaved: (value) => pass = value.trim(),
         ));
@@ -106,10 +110,8 @@ class _signUpPassState extends State<signUpPass> {
       padding: EdgeInsets.only(right: 20, left: 20, top: 50, bottom: 0),
       height: 100.0,
       child: Material(
-        borderRadius: BorderRadius.circular(20.0),
-        shadowColor: Colors.blueAccent,
-        color: Colors.blue,
-        elevation: 7.0,
+        borderRadius: BorderRadius.circular(8.0),
+          color: Color.fromRGBO(24, 119, 242, 1),
         child: GestureDetector(
           onTap: () {
             validateAndSubmit();

@@ -12,7 +12,12 @@ class _signUpState extends State<signUp> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Tao Tai khoan',),
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        title: Text('Tạo tài khoản', style: TextStyle(fontSize: 22,fontWeight:FontWeight.w600, color: Colors.black),),
+        backgroundColor: Colors.white,
       ),
       body: SignUpPage(context),
     );
@@ -68,7 +73,7 @@ class _signUpState extends State<signUp> {
         'Chúng tôi sẽ giúp bạn tạo tài  khoản sau vài bước thực hiện dễ dàng',
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: 16,color: Colors.black87
+            fontSize: 17,color: Color.fromRGBO(143, 145, 147,1,), fontWeight: FontWeight.w800
         ),
       ),
     );
@@ -77,11 +82,11 @@ class _signUpState extends State<signUp> {
   Widget _showButton(context) {
     return new Container(
       padding: EdgeInsets.only(left: 20, top: 10, bottom: 20, right: 20),
-      height: 80.0,
+      height: 77.0,
       child: Material(
         borderRadius: BorderRadius.circular(8.0),
 
-        color: Colors.blue,
+        color: Color.fromRGBO(24, 119, 242, 1),
         elevation: 7.0,
         child: GestureDetector(
           onTap: () {
@@ -90,11 +95,11 @@ class _signUpState extends State<signUp> {
           },
           child: Center(
             child: Text(
-              'Tiep',
+              'Tiếp',
               style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Color.fromRGBO(227, 238, 253, 1),
+                  fontWeight: FontWeight.w300,
                   fontFamily: 'Montserrat'),
             ),
           ),
@@ -113,7 +118,7 @@ class _signUpState extends State<signUp> {
             }, child: Center(
           child: Text(
             'Đã có tài khoản', style: TextStyle(
-            color: Colors.blue,
+            color: Color.fromRGBO(24, 119, 242, 1),
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),

@@ -304,7 +304,7 @@ class _signInState extends State<signIn> {
           },
           child: Center(
             child: Text(
-              'Tao tai khoan facebook moi',
+              'Tạo tài khoản Facebook mới',
               style: TextStyle(
                   fontSize: 18,
                   color: Colors.white,

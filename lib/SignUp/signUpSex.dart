@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:uifacebook/SignUp/signupDate.dart';
 import 'package:uifacebook/SignUp/signupName.dart';
 import 'package:uifacebook/SignUp/signupPhone.dart';
@@ -8,67 +9,206 @@ class signUpSex extends StatefulWidget {
   String firstName;
   String lastName;
   String sexUser;
-
+  bool nu = false;
+  bool nam = false;
+  bool tuychinh = false;
+  String namValue = "nam";
+  String nuValue = "nu";
+  String tuychinhValue = "";
   signUpSex({Key key, this.phone, this.firstName, this.lastName}) : super(key: key);
   @override
   _signUpSexState createState() => _signUpSexState();
 }
 
 class _signUpSexState extends State<signUpSex> {
-  List<Sex> sexs;
-  Sex selectedSex;
-  @override
-  void initState() {
-    super.initState();
-    sexs = Sex.getSexs();
-  }
 
-  setSelectedSex(Sex sex) {
-    setState(() {
-      selectedSex = sex;
-    });
-  }
-  List<Widget> createRadioListSexs() {
-    List<Widget> widgets = [];
-    for (Sex user in sexs) {
-      widgets.add(
-        RadioListTile(
-          value: user,
-          groupValue: selectedSex,
-          title: Text(user.name),
-          subtitle: Text(user.info
-          ),
-          onChanged: (currentSex) {
-            setSelectedSex(currentSex);
-          },
-          selected: selectedSex == user,
-          activeColor: Colors.green,
-        ),
-      );
-    }
-    return widgets;
-  }
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery
+        .of(context)
+        .size
+        ;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Gioi Tinh',),
-        centerTitle: true,
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        title: Text('Giới tính', style: TextStyle(fontSize: 22,fontWeight:FontWeight.w600, color: Colors.black),),
+        backgroundColor: Colors.white,
       ),
       body: Column(
         children: <Widget>[
           _showText1(),
           _showText2(),
-          Column(
-            children: createRadioListSexs(),
-          ),
+         _showSex(),
           _showButton(context)
         ],
       ),
     );
   }
+Widget _showSex(){
+  Size size = MediaQuery
+      .of(context)
+      .size
+      ;
+    return new Container(
+      child: Column(
+        children: <Widget>[
+          Container(height: 25,),
+          Row(
+            children: <Widget>[
 
+              Container(
+                padding: EdgeInsets.only(left: 15),
+                height: 30,
+                width: size.width,
+                child: CheckboxListTile(
+                  title: Text("Nữ",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 21),),
+                  value: widget.nu,
+                  onChanged: (bool value){
+                    setState(() {
+                     if(widget.nam == true){
+                       widget.nam = false;
+                       widget.nu = true;
+                     }
+                     else if(widget.tuychinh == true){
+                       widget.tuychinh = false;
+                       widget.nu = true;
+                     }else{
+                       widget.nu = !widget.nu;
+                     }
+                    });
+                  },
+                ),
+              ),
+
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                height: 10,
+                width: size.width*0.95,
+                child: Divider(
+                  thickness: 1,
+                  indent: 30,
+                  color: Colors.black,
+                ),
+              )
+
+
+            ],
+          ),
+          Container(height: 20,),
+          Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: 15),
+                height: 30,
+                width: size.width,
+                child: CheckboxListTile(
+                  title: Text("Nam",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 21),),
+                  value: widget.nam,
+                  onChanged: (bool value){
+                    setState(() {
+                      if(widget.nu == true){
+                        widget.nu = false;
+                        widget.nam = true;
+                      }
+                      else if(widget.tuychinh == true){
+                        widget.tuychinh = false;
+                        widget.nam = true;
+                      }else{
+                        widget.nam = !widget.nam;
+                      }
+                    });
+                  },
+                ),
+              ),
+
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                height: 10,
+                width: size.width*0.95,
+                child: Divider(
+                  thickness: 1,
+                  indent: 30,
+                  color: Colors.black,
+                ),
+              )
+
+
+            ],
+          ),
+          Container(height: 20,),
+          Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: 15),
+                height: 30,
+                width: size.width,
+                child: CheckboxListTile(
+                  title: Text("Tùy chỉnh",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 21),),
+                  value: widget.tuychinh,
+                  onChanged: (bool value){
+                    setState(() {
+                      if(widget.nu == true){
+                        widget.nu = false;
+                        widget.tuychinh = true;
+                      }
+                      else if(widget.nam == true){
+                        widget.nam = false;
+                        widget.tuychinh = true;
+                      }else{
+                        widget.tuychinh = !widget.tuychinh;
+                      }
+
+                    });
+                  },
+                ),
+              ),
+
+            ],
+          ),
+
+             Column(
+               children: <Widget>[
+                 Container(
+                   padding:EdgeInsets.only(top: 15,right: 30,left: 30,bottom: 10),
+                   child: Text("Chọn Tùy chỉnh nếu bạn thuộc giới tính khác hoặc bạn không muốn tiết lộ",style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),),
+                 )
+               ],
+             ),
+
+
+          Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(top: 20),
+                height: 10,
+                width: size.width*0.95,
+                child: Divider(
+                  thickness: 1,
+                  indent: 30,
+                  color: Colors.black,
+                ),
+              )
+
+
+            ],
+          ),
+
+        ],
+      ),
+    );
+}
 Widget _showText1(){
   return new Container(
     padding: EdgeInsets.only(top: 40,right: 20,left: 20),
@@ -77,7 +217,7 @@ Widget _showText1(){
       child: Text(
         'Giới tính của bạn là gì',
         textAlign: TextAlign.center
-        ,style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black87),
+        ,style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
       ),
     ),
   );
@@ -90,7 +230,8 @@ Widget _showText2(){
         'Về sau, bạn có thể thay đổi những ai nhìn thấy giới tính của mình trên trang cá nhân',
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: 16
+            fontSize: 19,
+          color: Colors.black
         ),
       ),
     ),
@@ -99,23 +240,31 @@ Widget _showText2(){
 
 Widget _showButton(context){
   return Container(
-    padding: EdgeInsets.only(right: 20, left: 20, top: 120, bottom: 0),
-    height: 160.0,
+    padding: EdgeInsets.only(right: 20, left: 20, top: 70, bottom: 0),
+    height: 120.0,
     child: Material(
-      borderRadius: BorderRadius.circular(20.0),
-      shadowColor: Colors.blueAccent,
-      color: Colors.blue,
+      borderRadius: BorderRadius.circular(8.0),
+      color: Color.fromRGBO(24, 119, 242, 1),
       elevation: 7.0,
       child: GestureDetector(
         onTap: () {
-          if(selectedSex.sexId == 3)
+          if(widget.tuychinh == true)
             {
-              widget.sexUser = null;
+              setState(() {
+                widget.sexUser = widget.tuychinhValue;
+              });
             }
-          else
-            {
-              widget.sexUser = selectedSex.name;
-            }
+          else if(widget.nu == true) {
+            setState(() {
+              widget.sexUser = "nu";
+            });
+
+          }else{
+            setState(() {
+              widget.sexUser = "nam";
+            });
+
+          }
 
 
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => signUpDate(phone: widget.phone,firstName:widget.firstName,lastName:widget.lastName,male:widget.sexUser)));

@@ -33,8 +33,12 @@ class _signUpNameState extends State<signUpName> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Ten'),
-        centerTitle: true,
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        title: Text('Tên', style: TextStyle(fontSize: 22,fontWeight:FontWeight.w600, color: Colors.black),),
+        backgroundColor: Colors.white,
       ),
       body: SignUpNamePage(context),
     );
@@ -75,8 +79,8 @@ class _signUpNameState extends State<signUpName> {
         'Bạn tên gì',
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: 22, fontWeight: FontWeight.bold,
-            color: Colors.black87
+            fontSize: 23, fontWeight: FontWeight.bold,
+            color: Colors.black
         ),
       ),
     );
@@ -101,10 +105,10 @@ class _signUpNameState extends State<signUpName> {
             labelStyle: TextStyle(
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.bold,
-                color: Colors.grey),
+                color: Color.fromRGBO(153, 156, 160, 1)),
             focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.green))),
-        validator: (value) => value.isEmpty ? 'Ho không thể trống' : null,
+                borderSide: BorderSide(color: Color.fromRGBO(24, 119, 242, 1)))),
+        validator: (value) => value.isEmpty ? 'Vui lòng nhập họ của bạn' : null,
         onSaved: (value) => firstName = value.trim(),
       ),
     );
@@ -129,10 +133,12 @@ class _signUpNameState extends State<signUpName> {
             labelStyle: TextStyle(
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.bold,
-                color: Colors.grey),
+                color: Color.fromRGBO(153, 156, 160, 1),
+            ),
+
             focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.green))),
-        validator: (value) => value.isEmpty ? 'Tên không thể trống' : null,
+                borderSide: BorderSide(color: Color.fromRGBO(24, 119, 242, 1)))),
+        validator: (value) => value.isEmpty ? 'Vui lòng nhập tên của bạn' : null,
         onSaved: (value) => lastName = value.trim(),
 
       ),
@@ -143,11 +149,11 @@ class _signUpNameState extends State<signUpName> {
   Widget _showButton(context) {
     return new Container(
       padding: EdgeInsets.only(right: 20, left: 20, top: 120, bottom: 0),
-      height: 160.0,
+      height: 170.0,
       child: Material(
-        borderRadius: BorderRadius.circular(20.0),
-        shadowColor: Colors.blueAccent,
-        color: Colors.blue,
+        borderRadius: BorderRadius.circular(8.0),
+
+        color: Color.fromRGBO(24, 119, 242, 1),
         elevation: 7.0,
         child: GestureDetector(
           onTap: () {

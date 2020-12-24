@@ -22,8 +22,12 @@ class _signUpDateState extends State<signUpDate> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Ngay sinh'),
-        centerTitle: true,
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        title: Text('Ngày sinh', style: TextStyle(fontSize: 22,fontWeight:FontWeight.w600, color: Colors.black),),
+        backgroundColor: Colors.white,
       ),
       body: SignUpDatePage(context),
     );
@@ -47,26 +51,28 @@ Widget _showText(){
   print('11');
   return new Container(
     padding: EdgeInsets.only(top: 30,right: 0,left: 0),
-    child: Text(
-      'Sinh nhật của bạn khi nào',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-          fontSize: 22,fontWeight: FontWeight.bold,
-          color: Colors.black87
+    child: Center(
+      child:  Text(
+        'Sinh nhật của bạn khi nào',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            fontSize: 22,fontWeight: FontWeight.bold,
+            color: Colors.black87
+        ),
       ),
-    ),
+    ) ,
+
   );
 }
 Widget _showButton(context){
   print('11');
   return new Container(
     padding: EdgeInsets.only(right: 20, left: 20, top: 120, bottom: 0),
-    height: 160.0,
+    height: 170.0,
     child: Material(
-      borderRadius: BorderRadius.circular(20.0),
-      shadowColor: Colors.blueAccent,
-      color: Colors.blue,
-      elevation: 7.0,
+      borderRadius: BorderRadius.circular(8.0),
+
+      color: Color.fromRGBO(24, 119, 242, 1),
       child: GestureDetector(
 
         onTap: () {
@@ -99,7 +105,7 @@ Widget _showDateTime(context) {
         DatePicker.showDatePicker(context,
             showTitleActions: true,
             minTime: DateTime(1930, 1, 1),
-            maxTime: DateTime(2014, 1, 1),
+            maxTime: DateTime(2013, 12, 31),
             theme: DatePickerTheme(
                 headerColor: Colors.blue,
                 backgroundColor: Colors.white,
@@ -113,10 +119,13 @@ Widget _showDateTime(context) {
               print('confirm $date');
             }, currentTime: DateTime.now(), locale: LocaleType.en);
       },
-      child: Text(
-        'Ban hay chon ngay sinh cua minh',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.blue,fontSize: 20),
-      ));
+      child: Center(
+        child:  Text(
+          'Bạn hãy chọn ngày sinh của mình',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.blue,fontSize: 20),
+        ),
+      )
+     );
 }
 }
