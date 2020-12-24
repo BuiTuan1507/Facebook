@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uifacebook/AddImage.dart';
 import 'package:uifacebook/AnotherProfile.dart';
 import 'package:uifacebook/FailRegister.dart';
 import 'package:uifacebook/SavePassword.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home:SaveUser(),
+      home:AddImage(),
     );
   }
 }
